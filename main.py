@@ -1,31 +1,34 @@
-while True:
-  choice = int(input("""
+def adicionarSenha():
+  with open('./base.txt', 'a') as banco:
+    nome = input("- Olá! Insira o nome de usuário: ")
+    senha = input("- Insira a senha de usuário: ")
+    banco.write(f'{nome}, {senha}\n')
+
+def verSenha():
+  with open('./base.txt', 'r') as banco:
+    linhas = banco.readlines()
+    if not linhas:
+      print("- Nenhuma senha cadastrada.")
+    else:
+      for senha in linhas:
+        print(f"{senha.strip()}") 
+def main():
+  while True:
+    choice = int(input("""
   Bem-vindo ao gerenciador de senha python!
 +================================+
 | 1 - Adicionar senha            |
-| 2 - Remover senha              |
-| 3 - Ver senhas                 |
-| 4 - Sair                       |
+| 2 - Ver senhas                 |
+| 3 - Sair                       |
 +================================+
     - """))
   
-  if choice == 1:
-    banco = open('./base.txt','a')
+    if choice == 1:
+      adicionarSenha()
+    elif choice == 2:
+      verSenha()
+    elif choice == 3:
+      break
 
-    nome = input("- Ola! Insira o nome de usuario: ")
-    senha = input("- Insira a senha de usuario: ")
-    banco.write(f'[{nome}, {senha}] ')
-    banco.close()
-    banco = open('./base.txt','r')
-    conteudo = banco.readlines()
-    for nome, senha in conteudo:
-      print(f"{nome},{senha}")
-    banco.close()
-
-  elif choice == 3:
-    banco = open('./base.txt','r')
-    conteudo = banco.readlines()
-    print(conteudo)
-    for nome, senha in conteudo:
-      print(f"{nome},{senha}")
-    banco.close()
+if __name__ == "__main__":
+    main()
